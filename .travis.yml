@@ -12,7 +12,7 @@ matrix:
     - python: 3.4
       env: DJANGO_VERSION=1.6.8
 install:
-  - pip install -r .
+  - pip install .
   - pip install coverage Django==$DJANGO_VERSION coveralls
 script:
   - coverage run --source="tests,debug_toolbar_multilang" `which django-admin.py` test --settings=tests.settings --pythonpath=.
