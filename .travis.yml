@@ -1,0 +1,20 @@
+language: python
+python:
+  - 2.7
+  - 3.2
+  - 3.3
+  - 3.4
+env:
+  - DJANGO_VERSION=1.6.8
+  - DJANGO_VERSION=1.7.1
+matrix:
+  exclude:
+    - python: 3.4
+      env: DJANGO_VERSION=1.6.8
+install:
+  - pip install -r .
+  - pip install coverage Django==$DJANGO_VERSION coveralls
+script:
+  - coverage run --source="tests,debug_toolbar_multilang" `which django-admin.py` test --settings=tests.settings --pythonpath=.
+after_success:
+  - coveralls

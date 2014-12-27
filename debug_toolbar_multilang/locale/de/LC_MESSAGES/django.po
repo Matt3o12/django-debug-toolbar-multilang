@@ -1,0 +1,56 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-27 12:48-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: panels/multilang.py:10 panels/multilang.py:14
+msgid "Languages"
+msgstr "Sprachen"
+
+#: panels/multilang.py:22
+#, python-format
+msgid "Current: %(current)s; total: %(total)d"
+msgstr "Aktuelle Sprache: %(current)s; total: %(total)d"
+
+#: templates/debug_toolbar_multilang/multilang.html:2
+msgid "<h4>Current Language: </h4>"
+msgstr "<h4>Aktuelle Sprache: </h4>"
+
+#: templates/debug_toolbar_multilang/multilang.html:6
+#, python-format
+msgid "%(lang)s (%(code)s)"
+msgstr "%(lang)s (%(code)s)"
+
+#: templates/debug_toolbar_multilang/multilang.html:10
+msgid "Available Languages:"
+msgstr "Verfügbare Sprachen"
+
+#: templates/debug_toolbar_multilang/multilang.html:15
+msgctxt "Table title; name of language in current language"
+msgid "Name"
+msgstr "Name"
+
+#: templates/debug_toolbar_multilang/multilang.html:19
+msgctxt "Table title; Localized version of language"
+msgid "Localized"
+msgstr "Regional"
+
+#: templates/debug_toolbar_multilang/multilang.html:34
+#, python-format
+msgid "Change language to %(lang_name)s"
+msgstr "Ändere Sprache zu %(lang_name)s"

@@ -1,0 +1,41 @@
+{% load i18n %}
+{% blocktrans with lang=current_lang_localized %}<h4>Current Language: </h4>{% endblocktrans %}
+
+{% trans current_lang.name as current_lang_localized %}
+<p>
+    {% blocktrans with lang=current_lang_localized code=current_lang.code %}{{ lang }} ({{ code }}){% endblocktrans %}
+</p>
+
+
+<h4>{% trans "Available Languages:" %}</h4>
+<table>
+    <thead>
+        <tr>
+            <th>
+                {% trans "Name" context "Table title; name of language in current language" %}
+            </th>
+            
+            <th>
+                {% trans "Localized" context "Table title; Localized version of language" %}
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for lang in languages %}
+        <tr>
+            <td>{% trans lang.name %}</td>
+            <td>{{ lang.name_local }}</td>
+            <td>
+                <a href="{% url 'djdt:multilang_change' %}?language={{ lang.code }}">
+                    {% trans lang.name as lang_name %}
+                    {% blocktrans %}Change language to {{ lang_name }}{% endblocktrans %}
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{# {% endlanguage %} #}
