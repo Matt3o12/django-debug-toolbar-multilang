@@ -18,8 +18,6 @@ setup(
     version='1.0',
     description='Language panel for django-debug-toolbar',
     long_description=get_long_description(),
-    setup_requires=['setuptools-markdown'],
-    long_description_markdown_filename='README.md',
     url='http://github.com/matt3o12/django-debug-toolbar-multilang',
     author='Matteo Kloiber',
     author_email='info@matt3o12.de',
