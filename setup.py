@@ -5,11 +5,15 @@ extra_install_requires = []
 if sys.version_info < (3, 3):
     extra_install_requires.append("mock")
 
+def get_long_description():
+    with open('README.md', "rt") as file:
+        return file.read()
+
 setup(
     name='django-debug-toolbar-multilang',
     version='1.0',
     description='Language panel for django-debug-toolbar',
-    long_description=open('README.md', encoding='utf-8').read(),
+    long_description=get_long_description(),
     url='http://github.com/matt3o12/django-debug-toolbar-multilang',
     author='Matteo Kloiber',
     author_email='info@matt3o12.de',
