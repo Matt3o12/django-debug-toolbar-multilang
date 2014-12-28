@@ -23,5 +23,17 @@ setup(
     author_email='info@matt3o12.de',
     license='MIT',
     packages=["debug_toolbar_multilang"],
-    install_requires=requirements
+    install_requires=requirements,
+    classifiers=[
+        "Framework :: Django",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
+        "Natural Language :: German",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+
+    ]
 )
