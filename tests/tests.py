@@ -206,7 +206,7 @@ class TestChangeLanguageView(DebugToolbarMultiLangTestCase):
 
 class TestSetKey(DebugToolbarMultiLangTestCase):
     def setUp(self):
-        super().setUp()
+        super(TestSetKey, self).setUp()
         self.container = {}
 
     def testSettingNotFound(self):
