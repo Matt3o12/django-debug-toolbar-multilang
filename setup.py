@@ -9,6 +9,7 @@ setup(
     name='django-debug-toolbar-multilang',
     version='1.0',
     description='Language panel for django-debug-toolbar',
+    long_description=open('README.md', encoding='utf-8').read(),
     url='http://github.com/matt3o12/django-debug-toolbar-multilang',
     author='Matteo Kloiber',
     author_email='info@matt3o12.de',
