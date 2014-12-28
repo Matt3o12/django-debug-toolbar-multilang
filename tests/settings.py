@@ -1,8 +1,4 @@
-"""Django settings for tests."""
-
 import os
-import debug_toolbar
-import django
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
@@ -36,9 +32,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
-if django.VERSION[:2] < (1, 6):
-    TEST_RUNNER = 'discover_runner.DiscoverRunner'
 
 ROOT_URLCONF = "tests.urls"
 

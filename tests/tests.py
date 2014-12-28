@@ -1,16 +1,14 @@
-import inspect
-from time import sleep
 import types
-from unittest.case import skip
 from debug_toolbar.toolbar import DebugToolbar
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.http.cookie import SimpleCookie
-from django.http.request import HttpRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
-from django.test.testcases import LiveServerTestCase
-from django.utils.translation import LANGUAGE_SESSION_KEY
+try:
+    from django.utils.translation import LANGUAGE_SESSION_KEY
+except ImportError:  # backwards compatible with django 1.6
+    LANGUAGE_SESSION_KEY = "django_language"
+
 from debug_toolbar_multilang import views
 from debug_toolbar_multilang.panels.multilang import MultiLangPanel
 
@@ -33,17 +31,27 @@ class DebugToolbarMultiLangTestCase(TestCase):
         :param request: HttpRequest
         :return: str
         """
-        values = {
-            "schema": request.scheme,
-            "host": request.get_host()
-        }
-        return "%(schema)s://%(host)s/" % values
+
+        # Django 1.6 does not support schemes properly.
+        # The RequestFactory does not know anything about
+        # schemes, as well.
+
+        # values = {
+        #     "schema": "https" if request.is_secure() else "http", or
+        #     "schema": request.get_scheme
+        #     "host": request.get_host()
+        # }
+        # return "%(schema)s://%(host)s/" % values
+
+        return "http://%s/" % request.get_host()
 
 
 class TestDebugToolbarMultiLangTestCase(DebugToolbarMultiLangTestCase):
-    def testGetHostURLHTTPs(self):
-        request = self.factory.get("/test/", secure=True, SERVER_NAME="test")
-        self.assertEqual("https://test/", self.get_host_url(request))
+    # not supported in djagno 1.6
+
+    # def testGetHostURLHTTPs(self):
+    #     request = self.factory.get("/test/", secure=True, SERVER_NAME="test")
+    #     self.assertEqual("https://test/", self.get_host_url(request))
 
     def testGetHostURLHTTP(self):
         request = self.factory.get("/test/", secure=False, SERVER_NAME="test")
@@ -69,6 +77,9 @@ class TestMultiLangPanel(DebugToolbarMultiLangTestCase):
 
     def testNavTitle(self):
         self.assertEqual("Languages", self.panel.nav_title())
+
+    def testNavtitle(self):
+        self.assertEqual("Languages", self.panel.title)
 
     def testNavSubtitle(self):
         newLang = {"name_local": "foo"}
@@ -191,3 +202,21 @@ class TestChangeLanguageView(DebugToolbarMultiLangTestCase):
         response = views.change_language(request)
         self.assertNotIn(settings.LANGUAGE_COOKIE_NAME, response.cookies)
         self.assertFalse(request.session.__setitem__.called)
+
+
+class TestSetKey(DebugToolbarMultiLangTestCase):
+    def setUp(self):
+        super().setUp()
+        self.container = {}
+
+    def testSettingNotFound(self):
+        views._set_key(self.container, "foo", "bar")
+        self.assertNotIn("foo", self.container)
+        self.assertNotIn("bar", self.container)
+
+    def testSettingsExists(self):
+        with self.settings(SECRET_KEY="foobar"):
+            views._set_key(self.container, "secret", "SECRET_KEY")
+
+        self.assertIn("secret", self.container)
+        self.assertEqual("foobar", self.container["secret"])

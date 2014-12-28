@@ -1,7 +1,11 @@
 from django.conf import settings
 from django.http.response import HttpResponseRedirect
 from django.utils.http import is_safe_url
-from django.utils.translation import check_for_language, LANGUAGE_SESSION_KEY
+from django.utils.translation import check_for_language
+try:
+    from django.utils.translation import LANGUAGE_SESSION_KEY
+except ImportError:
+    LANGUAGE_SESSION_KEY = "django_language"
 
 
 def get_next_url(request):
@@ -19,6 +23,20 @@ def get_next_url(request):
 
     return next_url
 
+
+def _set_key(container, key, attribute):  # TODO: Add unit tests and docs.
+    """
+    Sets the value of `settings.attribute` to container[key] if value is in
+    `django.utils.settings`.
+
+    :param container: dict
+    :param key: str
+    :param attribute: str
+    :return: None
+    """
+    value = getattr(settings, attribute, None)
+    if value:
+        container[key] = value
 
 def change_language(request):
     """
@@ -38,9 +56,13 @@ def change_language(request):
         if hasattr(request, 'session'):
             request.session[LANGUAGE_SESSION_KEY] = lang_code
         else:
-            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code,
-                                max_age=settings.LANGUAGE_COOKIE_AGE,
-                                path=settings.LANGUAGE_COOKIE_PATH,
-                                domain=settings.LANGUAGE_COOKIE_DOMAIN)
+            cookieKwargs = {}
+            _set_key(cookieKwargs, "max_age", "LANGUAGE_COOKIE_AGE")
+            _set_key(cookieKwargs, "path", "LANGUAGE_COOKIE_PATH")
+            _set_key(cookieKwargs, "domain", "LANGUAGE_COOKIE_DOMAIN")
+
+            response.set_cookie(
+                settings.LANGUAGE_COOKIE_NAME, lang_code, **cookieKwargs
+            )
 
     return response
