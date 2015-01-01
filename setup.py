@@ -10,7 +10,7 @@ requirements = []
 if sys.version_info < (3, 3):
     requirements.append("mock")
 
-requirements.append("Django>=1.7.1")
+requirements.append("Django>=1.6")
 requirements.append("django-debug-toolbar")
 
 setup(
