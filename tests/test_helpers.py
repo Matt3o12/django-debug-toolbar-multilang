@@ -1,4 +1,9 @@
-from tests.helpers import DebugToolbarMultiLangTestCase
+from __future__ import absolute_import
+
+try:
+    from tests.helpers import DebugToolbarMultiLangTestCase
+except ImportError as ex:
+    print(ex)
 
 
 class TestDebugToolbarMultiLangTestCase(DebugToolbarMultiLangTestCase):

@@ -1,4 +1,7 @@
+from __future__ import absolute_import
+
 from django.conf import settings
+from tests.helpers import LANGUAGE_SESSION_KEY
 
 try:
     from unittest import mock
@@ -7,7 +10,6 @@ except ImportError:
     import mock
     from mock import patch, MagicMock, call
 
-from django.utils.translation import LANGUAGE_SESSION_KEY
 from debug_toolbar_multilang import views
 from tests.helpers import DebugToolbarMultiLangTestCase
 from django.core.urlresolvers import reverse

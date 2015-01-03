@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import types
 from debug_toolbar.toolbar import DebugToolbar
 

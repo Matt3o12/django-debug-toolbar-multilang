@@ -1,6 +1,12 @@
+from __future__ import absolute_import
+
 from django.test.client import RequestFactory
 from django.test.testcases import TestCase
 
+try:
+    from django.utils.translation import LANGUAGE_SESSION_KEY
+except ImportError:  # backwards compatible with django 1.6
+    LANGUAGE_SESSION_KEY = "django_language"
 
 class DebugToolbarMultiLangTestCase(TestCase):
     def setUp(self):
