@@ -8,6 +8,7 @@ try:
 except ImportError:  # backwards compatible with django 1.6
     LANGUAGE_SESSION_KEY = "django_language"
 
+
 class DebugToolbarMultiLangTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
