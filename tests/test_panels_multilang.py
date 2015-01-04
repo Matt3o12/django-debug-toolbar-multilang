@@ -1,17 +1,12 @@
 from __future__ import absolute_import
 import types
+
 from debug_toolbar.toolbar import DebugToolbar
 
-try:
-    from unittest import mock
-    from unittest.mock import patch, MagicMock, call
-except ImportError:
-    import mock
-    from mock import patch, MagicMock, call
-
-
-from debug_toolbar_multilang.panels.multilang import MultiLangPanel
+from tests.helpers import mock
+from tests.helpers import patch, MagicMock, call
 from tests.helpers import DebugToolbarMultiLangTestCase
+from debug_toolbar_multilang.panels.multilang import MultiLangPanel
 
 
 class TestMultiLangPanel(DebugToolbarMultiLangTestCase):

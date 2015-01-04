@@ -24,7 +24,7 @@ def get_next_url(request):
     return next_url
 
 
-def _set_key(container, key, attribute):  # TODO: Add unit tests and docs.
+def _set_key(container, key, attribute):
     """
     Sets the value of `settings.attribute` to container[key] if value is in
     `django.utils.settings`.
@@ -37,6 +37,7 @@ def _set_key(container, key, attribute):  # TODO: Add unit tests and docs.
     value = getattr(settings, attribute, None)
     if value:
         container[key] = value
+
 
 def change_language(request):
     """

@@ -40,3 +40,5 @@ DEBUG = True
 DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar_multilang.panels.multilang.MultiLangPanel"
 ]
+
+TEST_RUNNER = "tests.helpers.DJDTMultilangRunner"

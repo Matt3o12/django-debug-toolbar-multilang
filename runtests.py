@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import logging
 import sys
 import multiprocessing
@@ -68,11 +70,11 @@ class ReloadTestEventHandler(PatternMatchingEventHandler):
             self.currentProcesses.join(.25)
 
             if self.currentProcesses.is_alive():
+                Colored.print_warning("Forced quit old tests.")
                 self.currentProcesses.terminate()
 
         self.currentProcesses = TestRunnerProcess(self.test_labels)
         self.currentProcesses.start()
-        self.currentProcesses.join()
 
 
 class TestRunnerProcess(multiprocessing.Process):

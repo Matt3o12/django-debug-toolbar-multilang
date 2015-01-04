@@ -2,8 +2,9 @@ from debug_toolbar.panels import Panel
 from django.conf import settings
 from django.conf.urls import url
 from django.utils import translation
-from debug_toolbar_multilang import views
 from django.utils.translation import ugettext as _
+
+from debug_toolbar_multilang import views
 
 
 class MultiLangPanel(Panel):

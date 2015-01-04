@@ -1,0 +1,5 @@
+[
+  ["test", "TEST"], ["test2", "TEST2"], ["foo%s bar", "FOO%s BAR"],
+  ["foo%(test)s bar", "FOO%(test)s BAR"], ["bar%(total)0.2fms tEsT",
+   "BAR%(total)0.2fms TEST"]
+]
