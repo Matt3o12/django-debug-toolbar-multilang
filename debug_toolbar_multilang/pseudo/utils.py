@@ -1,4 +1,6 @@
-from django.utils import translation as dj_translation, lru_cache
+import django
+
+from django.utils import translation as dj_translation
 from django.utils.translation import trans_real
 
 from debug_toolbar_multilang.pseudo import UpperPseudoLanguage
@@ -13,12 +15,18 @@ def patch_check_function(org):
     :return: the patched function.
     """
 
-    @lru_cache.lru_cache(maxsize=1000)
     def check_for_language(lang):
         if lang.startswith("pse"):
             return True
 
         return org(lang)
+
+    if django.VERSION < (1, 7):
+        from django.utils.functional import memoize
+        check_for_language = memoize(check_for_language, {}, 1)
+    else:
+        from django.utils import lru_cache
+        check_for_language = lru_cache.lru_cache(1000)(check_for_language)
 
     return check_for_language
 
