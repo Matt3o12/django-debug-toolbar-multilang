@@ -115,6 +115,17 @@ class TestPseudoLanguage(DebugToolbarMultiLangTestCase):
 
         self.assertEqual(six.u("bar"), text)
 
+    def testGetLanguage(self):
+        with self.assertRaises(NotImplementedError):
+            self.lang.language()
+
+    def testToLanguage(self):
+        with patch.object(self.lang, "language") as langMock:
+            result = self.lang.to_language()
+
+        self.assertEqual(langMock.return_value, result)
+        langMock.assert_called_once_with()
+
 @ddt.ddt
 class TestPseudoLanguageFunctional(DebugToolbarMultiLangTestCase):
     TEST_TYPE = FUNCTIONAL_TEST
@@ -163,7 +174,6 @@ class TestPseudoLanguageFunctional(DebugToolbarMultiLangTestCase):
         text = translation.ngettext("Test1", "Test2", value)
         self.assertEqual("TEST2", text)
 
-
 @ddt.ddt
 class TestStrRegex(DebugToolbarMultiLangTestCase):
     @ddt.file_data("strFormatPatterns.json")
@@ -176,9 +186,15 @@ class TestStrRegex(DebugToolbarMultiLangTestCase):
 
 @ddt.ddt
 class TestUpperPseudoLanguage(DebugToolbarMultiLangTestCase):
+    def setUp(self):
+        super(TestUpperPseudoLanguage, self).setUp()
+        self.lang = UpperPseudoLanguage()
+
     @ddt.file_data("makeUpperString.json")
     def testMakePseudo(self, values):
         message, expected = values
 
-        lang = UpperPseudoLanguage()
-        self.assertEqual(expected, lang.make_pseudo(message))
+        self.assertEqual(expected, self.lang.make_pseudo(message))
+
+    def testLanguage(self):
+        self.assertEqual("pse", self.lang.language())

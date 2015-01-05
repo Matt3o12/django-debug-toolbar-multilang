@@ -67,3 +67,9 @@ class PseudoLanguage(NullTranslations):
             return self.ugettext(msgid1)
         else:
             return self.ugettext(msgid2)
+
+    def language(self):
+        raise NotImplementedError
+
+    def to_language(self):
+        return self.language()

@@ -13,3 +13,6 @@ class UpperPseudoLanguage(PseudoLanguage):
             messageArray[start:end] = theMatch.group()
 
         return messageArray.decode("UTF-8")
+
+    def language(self):
+        return "pse"
