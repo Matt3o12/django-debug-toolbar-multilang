@@ -2,6 +2,8 @@ import ddt
 from django.utils import translation, six
 from django.utils.translation import trans_real
 from django.utils.translation.trans_real import CONTEXT_SEPARATOR
+from debug_toolbar_multilang.pseudo.accent_pseudo_language import \
+    AccentPseudoLanguage
 
 from debug_toolbar_multilang.pseudo.upper_pseudo_language import \
     UpperPseudoLanguage
@@ -201,3 +203,18 @@ class TestUpperPseudoLanguage(DebugToolbarMultiLangTestCase):
 
     def testLanguage(self):
         self.assertEqual("pse", self.lang.language())
+
+
+@ddt.ddt
+class TestAccentPseudoLanguage(DebugToolbarMultiLangTestCase):
+    def setUp(self):
+        super(TestAccentPseudoLanguage, self).setUp()
+        self.lang = AccentPseudoLanguage()
+
+    def testLanguage(self):
+        self.assertEqual("pse-accent", self.lang.language())
+
+    @ddt.file_data("accentStrings.json")
+    def testMakePseudo(self, values):
+        message, accented = values
+        self.assertEqual(accented, self.lang.make_pseudo(message))

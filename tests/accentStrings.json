@@ -1,0 +1,9 @@
+[
+    ["foo bar", "ƒöö ƀåŕ"], 
+    ["foo %s", "ƒöö %s"], 
+    ["foo t{bar}t", "ƒöö ţ{bar}ţ"],
+    ["{foo} hello {bar}", "{foo} ĥéļļö {bar}"],
+    ["%(total)0.2fms", "%(total)0.2fms"],
+    ["test %(total)0.2fms", "ţéšţ %(total)0.2fms"],
+    ["ƒöö bar", "ƒöö ƀåŕ"]
+]

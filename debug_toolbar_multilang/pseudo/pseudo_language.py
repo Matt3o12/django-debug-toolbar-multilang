@@ -11,7 +11,7 @@ class PseudoLanguage(NullTranslations):
         if CONTEXT_SEPARATOR in message:
             message = message.split(CONTEXT_SEPARATOR)[1]
 
-            # on python 2 we get a unicode unconditional due to the
+            # on python 2 we get a unicode unconditionally due to the
             # magic character. We need to cast it back to a
             # Python 2 string (bytes).
             if six.PY2:
