@@ -2,15 +2,10 @@ import ddt
 from django.utils import translation, six
 from django.utils.translation import trans_real
 from django.utils.translation.trans_real import CONTEXT_SEPARATOR
-from debug_toolbar_multilang.pseudo.accent_pseudo_language import \
-    AccentPseudoLanguage
-
-from debug_toolbar_multilang.pseudo.upper_pseudo_language import \
-    UpperPseudoLanguage
 
 from tests.helpers import MagicMock, patch, FUNCTIONAL_TEST
-from debug_toolbar_multilang.pseudo import PseudoLanguage, STR_FORMAT_PATTERN, \
-    bSTR_FORMAT_PATTERN
+
+from debug_toolbar_multilang.pseudo import PseudoLanguage
 from tests.helpers import DebugToolbarMultiLangTestCase
 
 
@@ -129,6 +124,7 @@ class TestPseudoLanguage(DebugToolbarMultiLangTestCase):
         self.assertEqual(langMock.return_value, result)
         langMock.assert_called_once_with()
 
+
 @ddt.ddt
 class TestPseudoLanguageFunctional(DebugToolbarMultiLangTestCase):
     TEST_TYPE = FUNCTIONAL_TEST
@@ -176,45 +172,3 @@ class TestPseudoLanguageFunctional(DebugToolbarMultiLangTestCase):
     def testNgettext_plural(self, value):
         text = translation.ngettext("Test1", "Test2", value)
         self.assertEqual("TEST2", text)
-
-@ddt.ddt
-class TestStrRegex(DebugToolbarMultiLangTestCase):
-    @ddt.file_data("strFormatPatterns.json")
-    def testMatches(self, value):
-        self.assertTrue(STR_FORMAT_PATTERN.match(value))
-        self.assertTrue(bSTR_FORMAT_PATTERN.match(six.b(value)))
-
-    @ddt.data("test", "test%s", "bar%(total)s")
-    def testDoesNotMatch(self, value):
-        self.assertFalse(STR_FORMAT_PATTERN.match(value))
-        self.assertFalse(bSTR_FORMAT_PATTERN.match(six.b(value)))
-
-@ddt.ddt
-class TestUpperPseudoLanguage(DebugToolbarMultiLangTestCase):
-    def setUp(self):
-        super(TestUpperPseudoLanguage, self).setUp()
-        self.lang = UpperPseudoLanguage()
-
-    @ddt.file_data("makeUpperString.json")
-    def testMakePseudo(self, values):
-        message, expected = values
-
-        self.assertEqual(expected, self.lang.make_pseudo(message))
-
-    def testLanguage(self):
-        self.assertEqual("pse", self.lang.language())
-
-
-@ddt.ddt
-class TestAccentPseudoLanguage(DebugToolbarMultiLangTestCase):
-    def setUp(self):
-        super(TestAccentPseudoLanguage, self).setUp()
-        self.lang = AccentPseudoLanguage()
-
-    def testLanguage(self):
-        self.assertEqual("pse-accent", self.lang.language())
-
-    @ddt.file_data("accentStrings.json")
-    def testMakePseudo(self, values):
-        message, accented = values
-        self.assertEqual(accented, self.lang.make_pseudo(message))
