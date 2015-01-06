@@ -5,7 +5,12 @@ from django.utils import six
 from django.utils.translation.trans_real import CONTEXT_SEPARATOR
 
 
-class PseudoLanguage(NullTranslations):
+class PseudoLanguage(NullTranslations, object):
+    def __init__(self, *args, **kwargs):
+        super(PseudoLanguage, self).__init__(*args, **kwargs)
+
+        self.bidi = False
+
     def get_pseudo(self, message):
         # remove the context seperator (added when using pgettext).
         if CONTEXT_SEPARATOR in message:
@@ -73,3 +78,23 @@ class PseudoLanguage(NullTranslations):
 
     def to_language(self):
         return self.language()
+
+    @property
+    def name(self):
+        raise NotImplementedError
+
+    @property
+    def name_local(self):
+        return self.name()
+
+    @property
+    def code(self):
+        return self.language()
+
+    def get_info_dict(self):
+        return {
+            'bidi': self.bidi,
+            'code': self.code,
+            'name': self.name,
+            'name_local': self.name_local
+        }

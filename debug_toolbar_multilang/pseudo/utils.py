@@ -1,9 +1,10 @@
 import django
+from django.conf.locale import LANG_INFO
 
 from django.utils import translation as dj_translation
 from django.utils.translation import trans_real
 
-from debug_toolbar_multilang.pseudo import UpperPseudoLanguage
+_languages = {}
 
 
 def patch_check_function(org):
@@ -48,11 +49,17 @@ def enable_pseudo_localization():  # pragma: no cover
     trans_real.check_for_language = patch_check_function(trans_real_bck)
 
     trans_bck = trans_real.translation
+
     def translation(language, *args, **kwargs):
-        if language.startswith("pse"):
-            return UpperPseudoLanguage()
+        if language in _languages:
+            return _languages[language]
 
         return trans_bck(language, *args, **kwargs)
 
-    test = trans_bck
     trans_real.translation = translation
+
+
+def register_pseudo_language(language):
+    LANG_INFO[language.code] = language.get_info_dict()
+    _languages[language.code] = language
+

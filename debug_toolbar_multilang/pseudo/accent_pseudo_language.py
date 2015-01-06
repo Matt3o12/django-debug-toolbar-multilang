@@ -138,3 +138,7 @@ class AccentPseudoLanguage(PseudoLanguage):
 
     def language(self):
         return "pse-accent"
+
+    @property
+    def name(self):
+        return "Accented-Pseudo Language"

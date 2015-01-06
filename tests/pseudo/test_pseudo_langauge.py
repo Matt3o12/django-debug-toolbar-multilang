@@ -6,6 +6,7 @@ from django.utils.translation.trans_real import CONTEXT_SEPARATOR
 from tests.helpers import MagicMock, patch, FUNCTIONAL_TEST
 
 from debug_toolbar_multilang.pseudo import PseudoLanguage
+
 from tests.helpers import DebugToolbarMultiLangTestCase
 
 

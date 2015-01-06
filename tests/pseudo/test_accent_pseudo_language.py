@@ -20,3 +20,6 @@ class TestAccentPseudoLanguage(DebugToolbarMultiLangTestCase):
     def testMakePseudo(self, values):
         message, accented = values
         self.assertEqual(accented, self.lang.make_pseudo(message))
+
+    def testName(self):
+        self.assertEqual("Accented-Pseudo Language", self.lang.name)

@@ -20,4 +20,7 @@ class TestUpperPseudoLanguage(DebugToolbarMultiLangTestCase):
         self.assertEqual(expected, self.lang.make_pseudo(message))
 
     def testLanguage(self):
-        self.assertEqual("pse", self.lang.language())
+        self.assertEqual("pse-upper", self.lang.language())
+
+    def testName(self):
+        self.assertEqual("Upper-Pseudo Language", self.lang.name)

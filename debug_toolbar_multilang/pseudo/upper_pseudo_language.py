@@ -15,4 +15,8 @@ class UpperPseudoLanguage(PseudoLanguage):
         return messageArray.decode("UTF-8")
 
     def language(self):
-        return "pse"
+        return "pse-upper"
+
+    @property
+    def name(self):
+        return "Upper-Pseudo Language"

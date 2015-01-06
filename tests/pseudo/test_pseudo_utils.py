@@ -1,12 +1,16 @@
-import ddt
 import os
+
+import ddt
 from django.utils import six
+
+from debug_toolbar_multilang.pseudo import utils
 from debug_toolbar_multilang.pseudo import STR_FORMAT_PATTERN, \
     bSTR_FORMAT_PATTERN
+from debug_toolbar_multilang.pseudo.pseudo_language import PseudoLanguage
 
 from tests.helpers import MagicMock
 from debug_toolbar_multilang.pseudo.utils import patch_check_function
-from tests.helpers import DebugToolbarMultiLangTestCase
+from tests.helpers import DebugToolbarMultiLangTestCase, patch
 
 
 @ddt.ddt
@@ -27,6 +31,25 @@ class TestPatchCheckFunction(DebugToolbarMultiLangTestCase):
         # always return True
         self.assertTrue(checkPatch(lang))
 
+class TestRegisterPseudoLanguageFunction(DebugToolbarMultiLangTestCase):
+    def testRegister(self):
+        lang = MagicMock(PseudoLanguage)
+        lang.code = "pse-mock"
+        lang.get_info_dict.return_value = {
+            'bidi': False,
+            'code': "pse-mock",
+            'name': "Pseudo Language (Mocked)",
+            'name_local': "Pseudo Language (Mocked)"
+        }
+
+        langInfo = utils.LANG_INFO
+        langDict = utils._languages
+        with patch.dict(utils._languages, clear=True), \
+             patch.dict(utils.LANG_INFO, clear=True):
+            utils.register_pseudo_language(lang)
+
+            self.assertEqual(lang, langDict["pse-mock"])
+            self.assertEqual(lang.get_info_dict(), langInfo["pse-mock"])
 
 # There is no better place for this test.
 @ddt.ddt
