@@ -7,7 +7,8 @@ from debug_toolbar_multilang.pseudo.upper_pseudo_language import \
     UpperPseudoLanguage
 
 from tests.helpers import MagicMock, patch, FUNCTIONAL_TEST
-from debug_toolbar_multilang.pseudo import PseudoLanguage, STR_FORMAT_PATTERN
+from debug_toolbar_multilang.pseudo import PseudoLanguage, STR_FORMAT_PATTERN, \
+    bSTR_FORMAT_PATTERN
 from tests.helpers import DebugToolbarMultiLangTestCase
 
 
@@ -178,11 +179,13 @@ class TestPseudoLanguageFunctional(DebugToolbarMultiLangTestCase):
 class TestStrRegex(DebugToolbarMultiLangTestCase):
     @ddt.file_data("strFormatPatterns.json")
     def testMatches(self, value):
-        self.assertTrue(STR_FORMAT_PATTERN.match(six.b(value)))
+        self.assertTrue(STR_FORMAT_PATTERN.match(value))
+        self.assertTrue(bSTR_FORMAT_PATTERN.match(six.b(value)))
 
     @ddt.data("test", "test%s", "bar%(total)s")
     def testDoesNotMatch(self, value):
-        self.assertFalse(STR_FORMAT_PATTERN.match(six.b(value)))
+        self.assertFalse(STR_FORMAT_PATTERN.match(value))
+        self.assertFalse(bSTR_FORMAT_PATTERN.match(six.b(value)))
 
 @ddt.ddt
 class TestUpperPseudoLanguage(DebugToolbarMultiLangTestCase):
