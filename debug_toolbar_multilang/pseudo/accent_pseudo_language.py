@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 from django.utils import six
 
 from debug_toolbar_multilang.pseudo import PseudoLanguage
