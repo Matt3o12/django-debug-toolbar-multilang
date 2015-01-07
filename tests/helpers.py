@@ -14,10 +14,10 @@ except ImportError:  # backwards compatible with django 1.6
 
 try:
     from unittest import mock
-    from unittest.mock import patch, MagicMock, Mock, call
+    from unittest.mock import patch, MagicMock, Mock, call, PropertyMock
 except ImportError:
     import mock
-    from mock import patch, MagicMock, Mock, call
+    from mock import patch, MagicMock, Mock, call, PropertyMock
 
 
 UNITTEST_TEST, FUNCTIONAL_TEST, INTEGRATION_TEST = range(3)

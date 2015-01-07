@@ -7,7 +7,7 @@ from tests.helpers import MagicMock, patch, FUNCTIONAL_TEST
 
 from debug_toolbar_multilang.pseudo import PseudoLanguage
 
-from tests.helpers import DebugToolbarMultiLangTestCase
+from tests.helpers import DebugToolbarMultiLangTestCase, PropertyMock
 
 
 @ddt.ddt
@@ -125,6 +125,34 @@ class TestPseudoLanguage(DebugToolbarMultiLangTestCase):
         self.assertEqual(langMock.return_value, result)
         langMock.assert_called_once_with()
 
+    def _propertyMock(self, prop):
+        return patch.object(PseudoLanguage, prop, new_callable=PropertyMock)
+
+    def testNameLocal(self):
+        with self._propertyMock("name") as nameMock:
+            nameMock.return_value = "Pseudo Lang"
+            self.assertEqual(self.lang.name_local, "Pseudo Lang")
+            nameMock.assert_called_once_with()
+
+    def testName(self):
+        with self.assertRaises(NotImplementedError):
+            self.lang.name  # does have an effect.
+
+    def testCode(self):
+        with patch.object(PseudoLanguage, "language") as langMock:
+            self.assertEqual(self.lang.code, langMock.return_value)
+
+    def testGetInfoDict(self):
+        with self._propertyMock("name") as nameMock, \
+                patch.object(self.lang, "language") as langMock:
+            d = self.lang.get_info_dict()
+
+        self.assertEqual(d, {
+            "bidi": False,
+            "code": langMock.return_value,  # code is the language by default.
+            "name": nameMock.return_value,
+            "name_local": nameMock.return_value,
+        })
 
 @ddt.ddt
 class TestPseudoLanguageFunctional(DebugToolbarMultiLangTestCase):

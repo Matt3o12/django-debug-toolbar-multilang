@@ -85,7 +85,7 @@ class PseudoLanguage(NullTranslations, object):
 
     @property
     def name_local(self):
-        return self.name()
+        return self.name
 
     @property
     def code(self):
