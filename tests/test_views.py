@@ -89,4 +89,3 @@ class TestChangeLanguageView(DebugToolbarMultiLangTestCase):
         response = views.change_language(request)
         self.assertNotIn(settings.LANGUAGE_COOKIE_NAME, response.cookies)
         self.assertFalse(request.session.__setitem__.called)
-

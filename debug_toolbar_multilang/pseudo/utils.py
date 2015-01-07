@@ -60,6 +60,13 @@ def enable_pseudo_localization():  # pragma: no cover
 
 
 def register_pseudo_language(language):
+    """
+    Registers a new pseudo language to django.conf.locale.LANG_INFO and
+    to djdt-multilang's own register of pseudo languages. Adding a language
+    to LANG_INFO is not enough.
+
+    :param language: PseudoLanguage
+    """
     LANG_INFO[language.code] = language.get_info_dict()
     _languages[language.code] = language
 

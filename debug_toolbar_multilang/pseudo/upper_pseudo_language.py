@@ -2,6 +2,10 @@ from debug_toolbar_multilang.pseudo import PseudoLanguage
 
 
 class UpperPseudoLanguage(PseudoLanguage):
+    """
+    Uppercases every messages it gets.
+    """
+
     def make_pseudo(self, message):
         # Import here in order to avoid a circular import on rare
         # circumstances.

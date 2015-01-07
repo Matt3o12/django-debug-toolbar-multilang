@@ -6,6 +6,14 @@ from django.utils.translation.trans_real import CONTEXT_SEPARATOR
 
 
 class PseudoLanguage(NullTranslations, object):
+    """
+    Base object for creating new pseudo translations.
+    Although it inherits from NullTranslations (which is an
+    old-style class object in Python 2), it also inherits from
+    an object and thus becomes a new-style class and allows
+    properties as well as super().
+    """
+
     def __init__(self, *args, **kwargs):
         super(PseudoLanguage, self).__init__(*args, **kwargs)
 
@@ -74,24 +82,68 @@ class PseudoLanguage(NullTranslations, object):
             return self.ugettext(msgid2)
 
     def language(self):
+        """
+        Returns the language (see: DjangoTranslation.language)
+
+        :return: str
+        """
         raise NotImplementedError
 
     def to_language(self):
+        """
+        Same as self.language and DjangoTranslation.language
+
+        :return: str
+        """
         return self.language()
 
     @property
     def name(self):
+        """
+        The human-readable name of the language. Use for
+        self.get_info_dict()
+
+        Raises an NotImplementedError if not overwritten.
+
+        :raise: NotImplementedError
+        :return:
+        """
         raise NotImplementedError
 
     @property
     def name_local(self):
+        """
+        The name of the language in its localized version.
+        This returns self.language() by default but can be
+        overwritten in subclasses.
+
+        :return: the localized version of the language.
+        """
         return self.name
 
     @property
     def code(self):
+        """
+        The language code. Same as language. Use for generating
+        the language dict and be customized in a subclass.
+        :return:
+        """
         return self.language()
 
     def get_info_dict(self):
+        """
+        Returns the info dict needed for django django.conf.locale.LANG_INFO
+
+        Format:
+        {
+            'bidi': self.bidi,
+            'code': self.code,
+            'name': self.name,
+            'name_local': self.name_local
+        }
+
+        :return: dict
+        """
         return {
             'bidi': self.bidi,
             'code': self.code,

@@ -1,11 +1,13 @@
 from django.utils import six
 
-# Static character map used for converting ASCI characters
+from debug_toolbar_multilang.pseudo import PseudoLanguage
+
+
+
+# Static character map used for converting ASCII characters
 # pseudo unicode string.
 # Character codes are taken from Java-pseudolocalizaion
 # https://code.google.com/p/pseudolocalization-tool/source/browse/trunk/java/com/google/i18n/pseudolocalization/methods/Accenter.java
-from debug_toolbar_multilang.pseudo import PseudoLanguage
-
 _chars = {
     " ": six.u("\u2003"),
     "!": six.u("\u00a1"),
@@ -110,6 +112,15 @@ def get_char(char):
 
 
 class AccentPseudoLanguage(PseudoLanguage):
+    """
+    Creates accented pseudo string, which are readable by humans but
+    clearly show whether or not the string is properly localized (and
+    if unicode works correctly).
+
+    Example:
+    English becomes Éñĝļîšĥ and Foo Bar becomes Ƒöö Ɓåŕ
+    """
+
     def make_pseudo(self, message):
         from debug_toolbar_multilang.pseudo import STR_FORMAT_PATTERN
         nonReplacements = []
@@ -134,6 +145,13 @@ class AccentPseudoLanguage(PseudoLanguage):
         return string
 
     def _getNextMatch(self, matches):
+        """
+        Pops the first element of out matches or returns non if empty.
+        Warning: this method manipulates matches!
+
+        :param matches: list -> all matches
+        :return: Match or None
+        """
         return matches.pop(0) if matches else None
 
     def language(self):
