@@ -69,4 +69,3 @@ def register_pseudo_language(language):
     """
     LANG_INFO[language.code] = language.get_info_dict()
     _languages[language.code] = language
-
