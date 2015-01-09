@@ -129,3 +129,4 @@ class DJDTMultilangRunner(DiscoverRunner):
     @property
     def test_loader(self):
         return self._test_loader_class(self.test_types)
+

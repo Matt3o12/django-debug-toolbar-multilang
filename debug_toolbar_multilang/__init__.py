@@ -1,6 +1,8 @@
 from django.conf import settings
 from debug_toolbar_multilang.pseudo.brackets_pseudo_language import \
     BracketsPseudoLanguage
+from debug_toolbar_multilang.pseudo.expander_pseudo_language import \
+    ExpanderPseudoLanguage
 
 from debug_toolbar_multilang.pseudo.utils import enable_pseudo_localization, \
     register_pseudo_language
@@ -16,6 +18,7 @@ if getattr(settings, "ENABLE_PSEUDO_LOCALIZATION", False):  # pragma: no cover
         AccentPseudoLanguage(),
         UpperPseudoLanguage(),
         BracketsPseudoLanguage(),
+        ExpanderPseudoLanguage(),
     ]
 
     for theLang in langs:

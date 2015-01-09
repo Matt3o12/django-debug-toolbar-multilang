@@ -1,0 +1,9 @@
+[
+  ["foo", "foo foo"],
+  ["foo %(test) bar", "foo %(test) bar foo %(test) bar"],
+  ["%s", "%s ???"],
+  ["%(test)s", "%(test)s %(test)s"],
+  ["foo{world}bar", "foo{world}bar foo{world}bar"],
+  ["foo{}bar", "foo{}bar foo???bar"],
+  ["{0:{width}{base}}", "{0:{width}{base}} {0:{width}{base}}"]
+]

@@ -1,0 +1,4 @@
+[
+  "{players[0]}", "{0.weight}", "{name}", "{0}", "{9}", "%(test)s",
+  "%(hello)d", "{0:#b}", "{0:{fill}{align}16}"
+]
