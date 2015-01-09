@@ -30,7 +30,7 @@ class ExpanderPseudoLanguage(PseudoLanguage):
         # create complete message by using the original, appending
         # a space and finally converting the safeMessage to a string
         # again.
-        return six.u("%s %s" % (message, "".join(safeMessage)))
+        return "%s %s" % (message, "".join(safeMessage))
 
     def language(self):
         return "pse-expander"
