@@ -9,14 +9,13 @@ class UpperPseudoLanguage(PseudoLanguage):
     def make_pseudo(self, message):
         # Import here in order to avoid a circular import on rare
         # circumstances.
-        from debug_toolbar_multilang.pseudo import bSTR_FORMAT_PATTERN
-
-        messageArray = bytearray(message.upper(), encoding="UTF-8")
-        for theMatch in bSTR_FORMAT_PATTERN.finditer(message.encode()):
+        from debug_toolbar_multilang.pseudo import STR_FORMAT_PATTERN
+        result = list(message.upper())
+        for theMatch in STR_FORMAT_PATTERN.finditer(message):
             start, end = theMatch.span()
-            messageArray[start:end] = theMatch.group()
+            result[start:end] = theMatch.group()
 
-        return messageArray.decode("UTF-8")
+        return "".join(result)
 
     def language(self):
         return "pse-upper"
